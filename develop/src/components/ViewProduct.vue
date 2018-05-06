@@ -10,9 +10,15 @@
         </div>
       </v-card-title>
       <v-card-actions>
-        <v-btn flat color="blue">Add product to cart</v-btn>
+        <v-btn flat color="blue" @click.native="snackbar = false; addToCart(product)">Add product to cart</v-btn>
       </v-card-actions>
     </v-card>
+    <v-snackbar
+      v-model="snackbar"
+    >
+      Product added to cart!
+      <v-btn color="pink" flat @click.native="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -20,16 +26,21 @@
 import firebase from 'firebase'
 
 import products from '../assets/products.json'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'viewproducts',
+  computed: mapGetters({
+    cart: 'cartProducts'
+  }),
   data () {
     return {
-      loading: true,
+      dialog: false,
+      drawer: null,
       menu_items: [
         {icon: 'exit_to_app', text: 'Logout', url: '/logout/'},
         {icon: 'home', text: 'Home', url: '/'},
-        {icon: 'shopping_cart', text: 'Shopping Cart', url: '/cart'},
+        {icon: 'shopping_cart', text: 'Shopping Cart', url: '/cart', badge: 0},
         {icon: 'history', text: 'Purchase history', url: '/history'},
         {icon: 'settings', text: 'Settings', url: '/settings'},
         {icon: 'chat_bubble', text: 'Send feedback', url: '/feedback'},
@@ -37,7 +48,8 @@ export default {
       ],
       isLoggedIn: false,
       currentUser: false,
-      product: null
+      product: null,
+      snackbar: false,
     }
   },
   created () {
@@ -47,6 +59,9 @@ export default {
     }
     this.search = ''
     this.product = products.find(x => x.id === this.$route.params.id)
-  }
+  },
+  methods: mapActions([
+    'addToCart'
+  ]),
 }
 </script>

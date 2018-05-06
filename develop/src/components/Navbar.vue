@@ -29,11 +29,15 @@
           </v-layout>
           <v-list-tile :to="item.url" :key="item.text">
             <v-list-tile-action :to="item.url">
-              <v-icon>{{ item.icon }}</v-icon>
+              <v-badge v-if="item.badge">
+                  <span slot="badge">{{item.badge}}</span>
+                  <v-icon>{{ item.icon }}</v-icon>
+              </v-badge>
+              <v-icon v-else>{{ item.icon }}</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
-                {{ item.text }}
+                  {{ item.text }}
               </v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
@@ -106,9 +110,13 @@
 import firebase from 'firebase'
 
 import products from '../assets/products.json'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'navbar',
+  computed: mapGetters({
+    cart: 'cartProducts'
+  }),
   data () {
     return {
       dialog: false,
@@ -116,7 +124,7 @@ export default {
       menu_items: [
         {icon: 'exit_to_app', text: 'Logout', url: '/logout/'},
         {icon: 'home', text: 'Home', url: '/'},
-        {icon: 'shopping_cart', text: 'Shopping Cart', url: '/cart'},
+        {icon: 'shopping_cart', text: 'Shopping Cart', url: '/cart', badge: 0},
         {icon: 'history', text: 'Purchase history', url: '/history'},
         {icon: 'settings', text: 'Settings', url: '/settings'},
         {icon: 'chat_bubble', text: 'Send feedback', url: '/feedback'},
@@ -146,6 +154,16 @@ export default {
     this.products = products
     this.loading = false
     this.debouncedGetAnswer = _.debounce(this.getAnswer, 500)
+
+    menu_items: [
+        {icon: 'exit_to_app', text: 'Logout', url: '/logout/'},
+        {icon: 'home', text: 'Home', url: '/'},
+        {icon: 'shopping_cart', text: 'Shopping Cart', url: '/cart', badge: this.cart},
+        {icon: 'history', text: 'Purchase history', url: '/history'},
+        {icon: 'settings', text: 'Settings', url: '/settings'},
+        {icon: 'chat_bubble', text: 'Send feedback', url: '/feedback'},
+        {icon: 'help', text: 'Help', url: '/help'}
+      ]
   },
   watch: {
     // whenever question changes, this function will run

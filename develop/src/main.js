@@ -8,9 +8,13 @@ import './components/firebaseInit'
 
 import Vuetify from 'vuetify'
 import VueFuse from 'vue-fuse'
+import Vuex from 'vuex'
+
+import store from './store'
 
 Vue.use(Vuetify)
 Vue.use(VueFuse)
+Vue.use(Vuex)
 
 Vue.config.productionTip = false
 
@@ -21,8 +25,10 @@ firebase.auth().onAuthStateChanged(function (user) {
     app = new Vue({
       el: '#app',
       router,
+      store,
       template: '<App/>',
       components: { App }
     })
   }
 })
+

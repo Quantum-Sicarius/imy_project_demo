@@ -91,7 +91,7 @@ export default {
       menu_items: [
         {icon: 'exit_to_app', text: 'Logout', url: '/logout/'},
         {icon: 'home', text: 'Home', url: '/'},
-        {icon: 'shopping_cart', text: 'Shopping Cart', url: '/cart'},
+        {icon: 'shopping_cart', text: 'Shopping Cart', url: '/cart', badge: this.$store.getCart},
         {icon: 'history', text: 'Purchase history', url: '/history'},
         {icon: 'settings', text: 'Settings', url: '/settings'},
         {icon: 'chat_bubble', text: 'Send feedback', url: '/feedback'},
