@@ -50,6 +50,18 @@ let router = new Router({
         { path: 'product/:id',
           name: 'viewproducts',
           component: ViewProduct
+        },
+        { path: 'settings',
+          name: 'settings',
+          component: Home
+        },
+        { path: 'help',
+          name: 'help',
+          component: Home
+        },
+        { path: 'feedback',
+          name: 'feedback',
+          component: Home
         }
       ]
     }
