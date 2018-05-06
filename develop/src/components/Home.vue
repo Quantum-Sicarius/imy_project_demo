@@ -81,14 +81,12 @@
 </template>
 
 <script>
-import db from './firebaseInit'
 import firebase from 'firebase'
 
 export default {
   name: 'home',
   data () {
     return {
-      products: [],
       loading: true,
       menu_items: [
         {icon: 'exit_to_app', text: 'Logout', url: '/logout/'},

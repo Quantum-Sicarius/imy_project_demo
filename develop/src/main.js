@@ -7,8 +7,10 @@ import firebase from 'firebase'
 import './components/firebaseInit'
 
 import Vuetify from 'vuetify'
+import VueFuse from 'vue-fuse'
 
 Vue.use(Vuetify)
+Vue.use(VueFuse)
 
 Vue.config.productionTip = false
 

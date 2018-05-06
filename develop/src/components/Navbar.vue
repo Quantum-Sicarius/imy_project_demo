@@ -52,6 +52,7 @@
         <span class="hidden-sm-and-down">ComX</span>
       </v-toolbar-title>
       <v-text-field
+        v-model="search"
         flat
         solo-inverted
         prepend-icon="search"
@@ -74,7 +75,27 @@
     <v-content>
       <v-container fluid>
         <v-layout justify-center align-center>
-          <router-view></router-view>
+          <router-view v-if="search === ''"></router-view>
+          <v-container grid-list-md text-xs-left v-else>
+          <v-progress-circular indeterminate color="primary" :size="70" v-if="loading == true"></v-progress-circular>
+          <v-layout row wrap> 
+            <v-flex xs4 v-for="product in searchResulsts" :key="product.id">
+              <v-card class="product" width="300">
+                <v-card-media :src="product.image" height="300px">
+                </v-card-media>
+                <v-card-title primary-title>
+                  <div>
+                    <div class="headline">{{ product.name }}</div>
+                    <span>R {{ product.price }}</span>
+                  </div>
+                </v-card-title>
+                <v-card-actions>
+                  <v-btn flat color="blue" :to="{ name: 'viewproducts', params: { id: product.id }}">View Product</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-container>
         </v-layout>
       </v-container>
     </v-content>
@@ -83,6 +104,9 @@
 
 <script>
 import firebase from 'firebase'
+
+import products from '../assets/products.json'
+
 export default {
   name: 'navbar',
   data () {
@@ -99,13 +123,43 @@ export default {
         {icon: 'help', text: 'Help', url: '/help'}
       ],
       isLoggedIn: false,
-      currentUser: false
+      currentUser: false,
+      search: '',
+      options: {
+        keys: [
+          "id",
+          "name",
+          "price",
+          "tag"
+        ]
+      },
+      products: [],
+      searchResulsts: [],
+      loading: false
     }
   },
   created () {
     if (firebase.auth().currentUser) {
       this.isLoggedIn = true
       this.currentUser = firebase.auth().currentUser.email
+    }
+    this.products = products
+    this.loading = false
+    this.debouncedGetAnswer = _.debounce(this.getAnswer, 500)
+  },
+  watch: {
+    // whenever question changes, this function will run
+    search: function (val) {
+      this.loading = true
+      this.debouncedGetAnswer()
+    }
+  },
+  methods: {
+    getAnswer:  function () {
+      this.$search(this.search, this.products, this.options).then(results => {
+        this.searchResulsts = results
+        this.loading = false
+      })
     }
   }
 }
