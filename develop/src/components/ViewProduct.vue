@@ -45,7 +45,7 @@ export default {
       this.isLoggedIn = true
       this.currentUser = firebase.auth().currentUser.email
     }
-
+    this.search = ''
     this.product = products.find(x => x.id === this.$route.params.id)
   }
 }

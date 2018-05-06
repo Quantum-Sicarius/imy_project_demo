@@ -90,7 +90,7 @@
                   </div>
                 </v-card-title>
                 <v-card-actions>
-                  <v-btn flat color="blue" :to="{ name: 'viewproducts', params: { id: product.id }}">View Product</v-btn>
+                  <v-btn flat color="blue"  v-on:click="search = ''" :to="{ name: 'viewproducts', params: { id: product.id }}">View Product</v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>
