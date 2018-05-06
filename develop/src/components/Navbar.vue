@@ -115,7 +115,7 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'navbar',
   computed: mapGetters({
-    cart: 'cartProducts'
+      cartProducts: 'cartProducts'
   }),
   data () {
     return {
@@ -158,7 +158,7 @@ export default {
     menu_items: [
         {icon: 'exit_to_app', text: 'Logout', url: '/logout/'},
         {icon: 'home', text: 'Home', url: '/'},
-        {icon: 'shopping_cart', text: 'Shopping Cart', url: '/cart', badge: this.cart},
+        {icon: 'shopping_cart', text: 'Shopping Cart', url: '/cart', badge: this.cartProducts.count},
         {icon: 'history', text: 'Purchase history', url: '/history'},
         {icon: 'settings', text: 'Settings', url: '/settings'},
         {icon: 'chat_bubble', text: 'Send feedback', url: '/feedback'},

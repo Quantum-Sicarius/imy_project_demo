@@ -10,7 +10,7 @@
         </div>
       </v-card-title>
       <v-card-actions>
-        <v-btn flat color="blue" @click.native="snackbar = false; addToCart(product)">Add product to cart</v-btn>
+        <v-btn flat color="blue" @click.native="addToCart(product); snackbar = true;">Add product to cart</v-btn>
       </v-card-actions>
     </v-card>
     <v-snackbar

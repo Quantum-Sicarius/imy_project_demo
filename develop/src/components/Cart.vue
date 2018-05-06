@@ -31,16 +31,23 @@
                 v-model="props.selected"
                 ></v-checkbox>
             </td>
-            <td>{{ props.item.name }}</td>
-            <td class="text-xs-right">{{ props.item.price }}</td>
+            <td class="text-xs-left">{{ props.item.name }}</td>
+            <td class="text-xs-right">R{{ props.item.price }}</td>
             </template>
         </v-data-table>
         </div>
         </v-card-title>
         <v-card-actions>
-        <v-btn flat dark>Checkout</v-btn>
+        <v-btn flat dark @click.native="snackbar = true; clearCart()">Checkout</v-btn>
         </v-card-actions>
+        
     </v-card>
+    <v-snackbar
+      v-model="snackbar"
+    >
+      Successfully checked out!
+      <v-btn color="pink" flat @click.native="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </v-layout>
 </template>
 
@@ -57,6 +64,7 @@ export default {
   data () {
     return {
       loading: true,
+      snackbar: false,
       menu_items: [
         {icon: 'exit_to_app', text: 'Logout', url: '/logout/'},
         {icon: 'home', text: 'Home', url: '/'},
